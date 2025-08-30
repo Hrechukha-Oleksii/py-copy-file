@@ -4,18 +4,18 @@ import os.path
 def copy_file(command: str) -> None:
 
     command_list = command.split(" ")
-    if "cp" not in command_list:
-        return
+
     if len(command_list) != 3:
         return
-    input_file_name = command_list[1]
-    output_file_name = command_list[2]
-    if input_file_name == output_file_name:
+    if command_list[0] != "cp":
         return
-    if not os.path.exists(input_file_name):
+    source_file_name = command_list[1]
+    destination_file_name = command_list[2]
+    if source_file_name == destination_file_name:
+        return
+    if not os.path.exists(source_file_name):
         return
 
-    with (open(input_file_name, "r") as file_input,
-          open(output_file_name, "w") as file_output):
-        for content in file_input.read():
-            file_output.write(content)
+    with (open(source_file_name, "r") as file_in,
+          open(destination_file_name, "w") as file_out):
+        file_out.write(file_in.read())
